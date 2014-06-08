@@ -3,8 +3,7 @@
     <wb-module deploy-name="countrybrowser-ws-webapp">
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/test/java"/>
-        <wb-resource deploy-path="/" source-path="/webapp"/>
-        <wb-resource deploy-path="/WEB-INF/classes" source-path="/webapp/WEB-INF"/>
+        <wb-resource deploy-path="/" source-path="/src/main/webapp"/>
         <dependent-module archiveName="countrybrowser-services-1.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/countrybrowser-services/countrybrowser-services">
             <dependency-type>uses</dependency-type>
         </dependent-module>
