@@ -58,7 +58,7 @@
                 <version>${findbugs.version}</version>
             </plugin>
 
-            <!-- Webapp Runner for Heroku -->
+            <!-- Webapp/Jetty Runner for Heroku -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
@@ -76,6 +76,12 @@
                                     <artifactId>webapp-runner</artifactId>
                                     <version>7.0.40.0</version>
                                     <destFileName>webapp-runner.jar</destFileName>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.mortbay.jetty</groupId>
+                                    <artifactId>jetty-runner</artifactId>
+                                    <version>7.5.4.v20111024</version>
+                                    <destFileName>jetty-runner.jar</destFileName>
                                 </artifactItem>
                             </artifactItems>
                         </configuration>
