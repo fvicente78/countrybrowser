@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context" xmlns:util="http://www.springframework.org/schema/util"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+                        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
+                        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd">
+
+    <context:annotation-config />
+
+    <!-- Exposed Services -->
+    <bean id="countryService" class="pt.fv.services.api.CountryServiceImpl">
+        <property name="restOperationHandler" ref="restTemplate" />
+        <property name="weatherService" ref="weatherServiceTemplate" />
+        <property name="webservicexFactory" ref="webservicexFactory" />
+    </bean>
+
+    <bean id="imagingService" class="pt.fv.services.api.ImagingServiceImpl" init-method="initialize">
+        <property name="flickrApi" ref="flickrApi" />
+        <property name="flickrAuth" ref="flickrAuth" />
+    </bean>
+
+    <!-- REST WebServices -->
+    <bean id="restTemplate" class="org.springframework.web.client.RestTemplate" />
+
+    <!-- SOAP WebServices -->
+    <bean id="messageFactory" class="org.springframework.ws.soap.saaj.SaajSoapMessageFactory">
+        <property name="soapVersion">
+            <util:constant static-field="org.springframework.ws.soap.SoapVersion.SOAP_12" />
+        </property>
+    </bean>
+
+    <!-- SOAP WebServiceX.net provider -->
+    <bean id="marshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
+        <property name="contextPath" value="net.webservicex" />
+    </bean>
+
+    <bean id="weatherServiceTemplate" class="org.springframework.ws.client.core.WebServiceTemplate">
+        <constructor-arg ref="messageFactory" />
+        <property name="marshaller" ref="marshaller"></property>
+        <property name="unmarshaller" ref="marshaller"></property>
+        <property name="messageSender">
+            <bean class="org.springframework.ws.transport.http.HttpComponentsMessageSender" />
+        </property>
+        <property name="defaultUri" value="http://www.webservicex.net/globalweather.asmx" />
+    </bean>
+
+    <bean id="webservicexFactory" class="net.webservicex.ObjectFactory" />
+
+    <!-- Flickr API -->
+
+    <bean id="flickrApi" class="com.flickr4java.flickr.Flickr">
+        <constructor-arg index="0" value="07bfc708b9ff31564c2efc7198f93732" />
+        <constructor-arg index="1" value="2032a66daf4adae7" />
+        <constructor-arg index="2">
+            <bean class="com.flickr4java.flickr.REST" />
+        </constructor-arg>
+    </bean>
+
+    <bean id="flickrAuth" class="com.flickr4java.flickr.auth.Auth">
+        <property name="permission">
+            <util:constant static-field="com.flickr4java.flickr.auth.Permission.READ" />
+        </property>
+        <property name="token" value="72157636186343374-ac6686bb37dc80d6" />
+        <property name="tokenSecret" value="a100ed7d296b2668" />
+    </bean>
+
+
+    <!-- Converters -->
+    <bean id="conversionService" class="org.springframework.context.support.ConversionServiceFactoryBean">
+        <property name="converters">
+            <list>
+                <bean class="pt.fv.services.converters.CountryInfo2CountryConverter" />
+                <bean class="pt.fv.services.converters.WeatherObservation2WeatherReportConverter" />
+                <bean class="pt.fv.services.converters.GetWeatherString2WeatherReportConverter" />
+            </list>
+        </property>
+    </bean>
+
+</beans>
