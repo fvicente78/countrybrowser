@@ -8,21 +8,24 @@
 
       <p:spacer width="20" />
       <div style="text-align: center;">
-        <h:outputText value="Please insert a country code to retrieve geographic data" />
+        <h:outputText value="Please insert a country code to retrieve geographic data" styleClass="custom-label" />
       </div>
 
       <!-- Form de pesquisa -->
       <p:spacer width="50" />
       <h:form>
-        <h:panelGrid id="inputPanel" columns="2" style="margin: 0 auto;">
+        <h:panelGrid id="inputPanel" columns="4" style="margin: 0 auto;">
           <h:outputText value="Country Code" />
           <p:inputText value="#{countryMB.countryCode}" size="2" maxlength="2" required="true" requiredMessage="Please insert a country code"
             style="text-align: center;" />
+          <p:spacer />
+          <p:spacer />
+
 
           <h:outputText value="Alternative Data Source" />
           <p:selectBooleanCheckbox value="#{countryMB.alternativeDataSource}" />
 
-          <p:spacer width="10" />
+          <p:spacer width="20" />
           <p:commandButton id="searchButton" value="Search" action="#{countryMB.findCountry}" update=":messages :countryResult"
             icon="ui-icon-search" />
         </h:panelGrid>
@@ -35,42 +38,42 @@
 
       <!-- Painel de resultados -->
       <p:spacer height="20" />
-      <p:panel id="countryResult" style="border: 0px;">
+      <p:panel id="countryResult" styleClass="no-border">
         <p:panel header="Country Information" style="width: 90%; margin: 0 auto;" rendered="#{countryMB.country != null}">
 
-          <h:panelGrid id="countryResultGrid" columns="2" style="margin-left: 30px;" >
-            <h:outputText value="Name:" />
+          <h:panelGrid id="countryResultGrid" columns="2" style="margin-left: 30px;">
+            <h:outputText value="Name:" styleClass="custom-label" />
             <h:outputText value="#{countryMB.country.name}" />
 
-            <h:outputText value="Official Language:" />
+            <h:outputText value="Official Language:" styleClass="custom-label" />
             <h:outputText value="#{countryMB.country.language}" />
 
-            <h:outputText value="Population:" />
+            <h:outputText value="Population:" styleClass="custom-label" />
             <h:outputText value="#{countryMB.country.population}" />
 
-            <h:outputText value="Currency:" />
+            <h:outputText value="Currency:" styleClass="custom-label" />
             <h:outputText value="#{countryMB.country.currency.currencyCode}" />
 
-            <h:outputText value="Coordinates:" />
+            <h:outputText value="Coordinates:" styleClass="custom-label" />
             <h:outputText value="#{countryMB.country.coordinates}" />
           </h:panelGrid>
 
           <p:spacer height="10" />
-          <p:panel header="Capital Information">
+          <p:panel header="Capital Information" styleClass="no-border">
             <h:panelGrid id="capitalResultGrid" columns="2">
-              <h:outputText value="Name:" />
+              <h:outputText value="Name:" styleClass="custom-label" />
               <h:outputText value="#{countryMB.country.capital.name}" />
 
-              <h:outputText value="ICAO Code:" />
+              <h:outputText value="ICAO Code:" styleClass="custom-label" />
               <h:outputText value="#{countryMB.country.capital.icaoCode}" />
 
-              <h:outputText value="Wind:" />
+              <h:outputText value="Wind:" styleClass="custom-label" />
               <h:outputText value="#{countryMB.weatherReport.wind}" />
 
-              <h:outputText value="Sky Conditions:" />
+              <h:outputText value="Sky Conditions:" styleClass="custom-label" />
               <h:outputText value="#{countryMB.weatherReport.skyConditions}" />
 
-              <h:outputText value="Temperature:" />
+              <h:outputText value="Temperature:" styleClass="custom-label" />
               <h:outputText value="#{countryMB.weatherReport.temperature}" />
             </h:panelGrid>
           </p:panel>

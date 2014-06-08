@@ -1,7 +1,6 @@
 package pt.fv.services.api.bean;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * Informação meteorológica para uma coordenada geográfica
