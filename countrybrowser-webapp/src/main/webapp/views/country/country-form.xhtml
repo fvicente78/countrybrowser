@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html"
+  xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui" template="/layout/main-layout.xhtml">
+
+  <ui:define name="main-content">
+    <p:panel id="mainPanel">
+
+      <p:spacer width="20" />
+      <div style="text-align: center;">
+        <h:outputText value="Please insert a country code to retrieve geographic data" />
+      </div>
+
+      <!-- Form de pesquisa -->
+      <p:spacer width="50" />
+      <h:form>
+        <h:panelGrid id="inputPanel" columns="2" style="margin: 0 auto;">
+          <h:outputText value="Country Code" />
+          <p:inputText value="#{countryMB.countryCode}" size="2" maxlength="2" required="true" requiredMessage="Please insert a country code"
+            style="text-align: center;" />
+
+          <h:outputText value="Alternative Data Source" />
+          <p:selectBooleanCheckbox value="#{countryMB.alternativeDataSource}" />
+
+          <p:spacer width="10" />
+          <p:commandButton id="searchButton" value="Search" action="#{countryMB.findCountry}" update=":messages :countryResult"
+            icon="ui-icon-search" />
+        </h:panelGrid>
+
+
+        <p:blockUI block=":mainPanel" trigger="searchButton">
+          Loading ...<br />
+        </p:blockUI>
+      </h:form>
+
+      <!-- Painel de resultados -->
+      <p:spacer height="20" />
+      <p:panel id="countryResult" style="border: 0px;">
+        <p:panel header="Country Information" style="width: 90%; margin: 0 auto;" rendered="#{countryMB.country != null}">
+
+          <h:panelGrid id="countryResultGrid" columns="2" style="margin-left: 30px;" >
+            <h:outputText value="Name:" />
+            <h:outputText value="#{countryMB.country.name}" />
+
+            <h:outputText value="Official Language:" />
+            <h:outputText value="#{countryMB.country.language}" />
+
+            <h:outputText value="Population:" />
+            <h:outputText value="#{countryMB.country.population}" />
+
+            <h:outputText value="Currency:" />
+            <h:outputText value="#{countryMB.country.currency.currencyCode}" />
+
+            <h:outputText value="Coordinates:" />
+            <h:outputText value="#{countryMB.country.coordinates}" />
+          </h:panelGrid>
+
+          <p:spacer height="10" />
+          <p:panel header="Capital Information">
+            <h:panelGrid id="capitalResultGrid" columns="2">
+              <h:outputText value="Name:" />
+              <h:outputText value="#{countryMB.country.capital.name}" />
+
+              <h:outputText value="ICAO Code:" />
+              <h:outputText value="#{countryMB.country.capital.icaoCode}" />
+
+              <h:outputText value="Wind:" />
+              <h:outputText value="#{countryMB.weatherReport.wind}" />
+
+              <h:outputText value="Sky Conditions:" />
+              <h:outputText value="#{countryMB.weatherReport.skyConditions}" />
+
+              <h:outputText value="Temperature:" />
+              <h:outputText value="#{countryMB.weatherReport.temperature}" />
+            </h:panelGrid>
+          </p:panel>
+          <p:spacer height="20" />
+
+          <p:galleria value="#{countryMB.imageURLs}" var="image" panelWidth="400" panelHeight="200" showCaption="false" transitionInterval="5000"
+            style="margin: 0 auto;">
+            <p:graphicImage value="#{image}" height="200" style="float: center;" />
+          </p:galleria>
+        </p:panel>
+      </p:panel>
+
+      <p:spacer height="20" />
+    </p:panel>
+
+  </ui:define>
+
+</ui:composition>
+
